@@ -13,8 +13,8 @@ def home():
 
 @app.route('/about')
 def about():
-    return "I am still working on this"
-
+    """Render the about page."""
+    return render_template("about.html")
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
