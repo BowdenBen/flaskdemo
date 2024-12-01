@@ -26,9 +26,23 @@ def search():
 
 @app.route('/results')
 def results():
-    search_term = session['search_term']
-    page = get_page(search_term)
-    return render_template("results.html", page=page)
+    """Render the results page."""
+    search_term = session.get('search_term', '')
+
+    if not search_term:
+        return redirect(url_for('search'))
+
+    try:
+        # Fetch the Wikipedia page using get_page
+        page = get_page(search_term)
+        return render_template("results.html", page=page)
+    except wikipedia.exceptions.DisambiguationError as e:
+        # Handle ambiguous search terms
+        return render_template("results.html", suggestions=e.options, search_term=search_term)
+    except Exception as e:
+        # Handle other errors
+        return render_template("results.html", error=f"An unexpected error occurred: {e}")
+
 
 
 def get_page(search_term):

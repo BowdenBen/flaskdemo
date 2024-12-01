@@ -13,7 +13,7 @@
     <p>We found multiple results. Please select one:</p>
     <ul>
     {% for suggestion in suggestions %}
-        <li>{{ suggestion }}</li>
+       <li><a href="{{ url_for('search') }}?search={{ suggestion }}">{{ suggestion }}</a></li>
     {% endfor %}
     </ul>
 {% elif error %}
