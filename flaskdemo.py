@@ -33,14 +33,14 @@ def results():
         return redirect(url_for('search'))
 
     try:
-        # Fetch the Wikipedia page using get_page
+        # Use the existing get_page function to retrieve the Wikipedia page
         page = get_page(search_term)
         return render_template("results.html", page=page)
     except wikipedia.exceptions.DisambiguationError as e:
-        # Handle ambiguous search terms
+        # Handle ambiguous search terms and pass suggestions to the template
         return render_template("results.html", suggestions=e.options, search_term=search_term)
     except Exception as e:
-        # Handle other errors
+        # Handle unexpected errors
         return render_template("results.html", error=f"An unexpected error occurred: {e}")
 
 
